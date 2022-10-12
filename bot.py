@@ -37,19 +37,18 @@ while True:
     seed = random.randint(0, 10000)
     generator = torch.Generator("cpu").manual_seed(seed)
 
-    colors = ["black", "blonde", "silver", "white", "red", "blue", "brown", "pink"]
-    hair_color = random.choice(colors)
-    eye_color = random.choice(colors)
+    hair_color = random.choice(["black", "red", "purple", "green", "yellow", "blue", "orange", "brown", "blonde", "silver", "white", "pink"])
+    eye_color = random.choice(["black", "red", "purple", "green", "yellow", "blue", "orange", "brown"])
     place = random.choice(["indoors", "outdoors", "classroom", "bedroom", "explosion"])
     body = random.choice(["upper body", "cowboy shot", "full body", "wide shot"])
     clothes = random.choice(["serafuku", "school uniform", "sundress", "maid", "gloves"])
     hair_style = random.choice(["long hair", "short hair", "braid", "twintails", "ponytail"])
-    posture = random.choice(["sitting", "standing", "lying", "kneeling"])
-
-    prompt = f"{body}, 1girl, solo, {hair_color} hair, {hair_style}, {eye_color} eyes, {place}, {clothes}, {posture}, looking at viewer, safe"
+    posture = random.choice(["sitting", "standing", "lying"])
+    face = random.choice(["smile", "angry", "blush", "surprised", "expressionless", "smug"])
+    prompt = f"{body}, 1girl, solo, {hair_color} hair, {hair_style}, {eye_color} eyes, {place}, {clothes}, {posture}, {face}, safe"
     negative = "explicit, questionable, nsfw, pussy, head out of frame, bad anatomy, bad hands, lowres, blurry, cropped, jpeg artifacts, low quality, text, signature, chibi"
 
-    steps = 50
+    steps = 40
     image = pipe(prompt, generator=generator, num_inference_steps=steps)["sample"][0]
 
     date = datetime.now().strftime("%Y%m%d_%H%M%S")
