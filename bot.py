@@ -39,14 +39,14 @@ while True:
 
     hair_color = random.choice(["black", "red", "purple", "green", "yellow", "blue", "orange", "brown", "blonde", "silver", "white", "pink"])
     eye_color = random.choice(["black", "red", "purple", "green", "yellow", "blue", "orange", "brown"])
-    place = random.choice(["indoors", "outdoors", "classroom", "bedroom", "explosion"])
-    body = random.choice(["upper body", "cowboy shot", "full body", "wide shot"])
+    place = random.choice(["indoors", "outdoors", "classroom", "bedroom", "street", "ocean"])
+    body = random.choice(["face", "upper body", "cowboy shot", "wide shot"])
     clothes = random.choice(["serafuku", "school uniform", "sundress", "maid", "gloves"])
     hair_style = random.choice(["long hair", "short hair", "braid", "twintails", "ponytail"])
     posture = random.choice(["sitting", "standing", "lying"])
     face = random.choice(["smile", "angry", "blush", "surprised", "expressionless", "smug"])
     prompt = f"{body}, 1girl, solo, {hair_color} hair, {hair_style}, {eye_color} eyes, {place}, {clothes}, {posture}, {face}, safe"
-    negative = "explicit, questionable, nsfw, pussy, head out of frame, bad anatomy, bad hands, lowres, blurry, cropped, jpeg artifacts, low quality, text, signature, chibi"
+    negative = "explicit, questionable, nsfw, pussy, bad anatomy, bad hands, lowres, blurry, cropped, jpeg artifacts, low quality, text, signature, chibi, pablo picaso"
 
     steps = 40
     image = pipe(prompt, generator=generator, num_inference_steps=steps)["sample"][0]
@@ -62,6 +62,7 @@ while True:
     img.save(filename, "PNG", pnginfo=info)
 
     try:
-        api.update_status_with_media(status=prompt, filename=filename)
+        message = prompt + f" (seed={seed})"
+        api.update_status_with_media(status=message, filename=filename)
     except Exception as e:
         print(e)
